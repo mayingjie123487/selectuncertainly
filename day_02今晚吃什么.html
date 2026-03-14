@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今晚吃什么</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .entireBox {
+            position: relative;
+            height: 400px;
+            width: 600px;
+            background-color: rgb(128, 252, 128, 0.1);
+            margin: 100px auto;
+            padding: 20px;
+            border: 1px solid black;
+        }
+
+        .topBox {
+            font-weight: 700;
+            position: absolute;
+            top: 10;
+            font-size: 40px;
+            color: black;
+            width: 560px;
+            text-align: center;
+            height: 120px;
+            line-height: 120px;
+        }
+
+        .bottomLeftBox {
+            position: absolute;
+            display: inline-block;
+            bottom: 20px;
+            left: 60px;
+            width: 100px;
+            height: 40px;
+            text-align: center;
+            line-height: 36px;
+            background-color: beige;
+            border: 2px solid grey;
+        }
+
+        .bottomRightBox {
+            position: absolute;
+            display: inline-block;
+            bottom: 20px;
+            right: 60px;
+            width: 100px;
+            height: 40px;
+            text-align: center;
+            line-height: 36px;
+            background-color: beige;
+            border: 2px solid grey;
+        }
+
+        .mainBox {
+            position: absolute;
+            top: 130px;
+            background-color: antiquewhite;
+            width: 560px;
+            /* 使用了box-sizing:border-box之后，height里面包含padding和border，所以里面实际的
+            内容物（padding里面的）只有高46px */
+            height: 50px;
+            margin: 0 auto;
+            border: 2px solid pink;
+            text-align: center;
+            /* 行高是要和内容物相同，文字才会在中间 */
+            line-height: 46px;
+            color: green
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 随机问答 -->
+    <div class="entireBox">
+        <div class="topBox">今晚吃什么？</div>
+        <div class="mainBox"></div>
+        <div class="bottomLeftBox">开始</div>
+        <div class="bottomRightBox">结束</div>
+    </div>
+    <script>
+        let food_01 = prompt('请输入你要吃的第1个食物')
+        let food_02 = prompt('请输入你要吃的第2个食物')
+        let food_03 = prompt('请输入你要吃的第3个食物')
+        let food_04 = prompt('请输入你要吃的第4个食物')
+        let food_05 = prompt('请输入你要吃的第5个食物')
+        let foodsArr = [food_01, food_02, food_03, food_04, food_05]
+        let i = 0
+        let p = 0
+        let timeId = null
+        // 在函数内部，参数的括号里什么也不写，就可以把全局变量i当参数
+        function selectFood() {
+            if (i === 5) {
+                i = 0;
+            }
+            else {
+                const selectContent = document.querySelector('.mainBox')
+                selectContent.innerHTML = foodsArr[i]
+                i++
+                console.log(i)
+            }
+        }
+        const startSelect = document.querySelector('.bottomLeftBox')
+        startSelect.addEventListener('click', function () {
+            // 使用一个timeId来防止同时播放好几个计时器
+            if (timeId) {
+                return
+            }
+            //setInterval返回的值是一个非负整数
+            timeId = setInterval(selectFood, 100)
+        })
+        const stopSelect = document.querySelector('.bottomRightBox')
+        stopSelect.addEventListener('click', function () {
+            //set创建定时器的时候，会返回一个id，把这个id传给clear计时器，就可以停止对应计时器
+            clearInterval(timeId)
+            // 重置id方便下次使用
+            timeId = null
+        })
+
+        // 让字体的颜色随机改变
+    </script>
+</body>
+
+</html>
